@@ -83,7 +83,7 @@ router.post('/hostel-warden/login',wardenLogin);
 router.post('/hostel-warden',auth([2,hostelAdmin]),createHostelWarden);
 router.post('/hostel-warden/update',auth([3,hostelAdmin,hostelWarden]),updateHostelWarden);
 router.get('/hostel-warden',auth([6,student,hostelAdmin,hostelWarden,careTaker,hostelSecretary]), getHostelWarden);
-router.get('/hostel-warden/:hostelId',auth([6,student,hostelAdmin,hostelWarden,careTaker,hostelSecretary]), getHostelWardenByHostelId);
+router.get('/hostel-warden/:hostelId',auth([7,student,hostelAdmin,hostelWarden,careTaker,hostelSecretary,messAdmin]), getHostelWardenByHostelId);
 
 //hostel-warden-archives
 router.post('/hostel-warden-archives',auth([2,hostelAdmin]),createHostelWardenArchives);
@@ -95,7 +95,7 @@ router.post('/care-taker/login',careTakerLogin_);
 router.post('/care-taker',auth([2,hostelAdmin]),createCareTaker);
 router.post('/care-taker/update',auth([3,hostelAdmin,careTaker]),updateCareTaker);
 router.get('/care-taker',auth([6,student,hostelAdmin,hostelWarden,careTaker,hostelSecretary]), getCareTaker);
-router.get('/care-taker/:hostelId',auth([6,student,hostelAdmin,hostelWarden,careTaker,hostelSecretary]), getCareTakerByHostelId);
+router.get('/care-taker/:hostelId',auth([7,student,hostelAdmin,hostelWarden,careTaker,hostelSecretary,messAdmin]), getCareTakerByHostelId);
 
 //care-taker-archives
 router.post('/care-taker-archives',auth([2,hostelAdmin]),createCareTakerArchives);
@@ -103,5 +103,15 @@ router.get('/care-taker-archives',auth([6,student,hostelAdmin,hostelWarden,careT
 router.get('/care-taker-archives/:hostelId',auth([6,student,hostelAdmin,hostelWarden,careTaker,hostelSecretary]), getCareTakerArchivesByHostelId);
 
 
+// hostel secretary
+router.post('/hostel-secretary',auth([2,hostelAdmin]),createHostelSecretary);
+router.post('/hostel-secretary/update',auth([3,hostelAdmin,careTaker]),updateHostelSecretary);
+router.get('/hostel-secretary',auth([6,student,hostelAdmin,hostelWarden,careTaker,hostelSecretary]), getHostelSecretary);
+router.get('/hostel-secretary/:hostelId',auth([7,student,hostelAdmin,hostelWarden,careTaker,hostelSecretary,messAdmin]), getHostelSecretaryByHostelId);
+
+// hostel-secretary archives
+router.post('/hostel-secretary-archives',auth([2,hostelAdmin]),createHostelSecretaryArchives);
+router.get('/hostel-secretary-archives',auth([6,student,hostelAdmin,hostelWarden,careTaker,hostelSecretary]), getHostelSecretaryArchives);
+router.get('/hostel-secretary-archives/:hostelId',auth([6,student,hostelAdmin,hostelWarden,careTaker,hostelSecretary]), getHostelSecretaryArchivesByHostelId);
 module.exports = router;
 

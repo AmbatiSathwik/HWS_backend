@@ -1,6 +1,7 @@
 const express = require("express");
 const {
   createMess,
+  
   updateMessDetails,
   getMessDetails,
   getMessDetailsByMessId,
@@ -24,7 +25,9 @@ const {
   getMessAvailability,
   getMessAvailabilityByMessId,
   getMessUserByStudentId,
+  updateMessAvailability,
   getMessAdminByEmail
+
 } = require("../controllers/mess");
 const student = require("../models/student");
 const { messAdmin } = require("../models/mess");
@@ -68,15 +71,7 @@ router.get(
 router.post("/mess-admin-by-email",auth([2,messAdmin]),getMessAdminByEmail)
 router.get(
   "/mess-admin/:messId",
-  auth([
-    7,
-    student,
-    messAdmin,
-    hostelAdmin,
-    hostelWarden,
-    careTaker,
-    hostelSecretary,
-  ]),
+   
   getMessAdminByMessId
 );
 
@@ -113,7 +108,7 @@ router.get(
   getMessAdminArchivesByMessId
 );
 
-router.post("/mess-user", auth([2, student]), createMessUser);
+router.post("/mess-user",   createMessUser);
 router.post("/mess-user/update", auth([2, student]), updateMessUser);
 router.get("/mess-user/:studentId/:year/:month", auth([2, student]), getMyMess);
 router.get(
@@ -208,6 +203,7 @@ router.get(
   ]),
   getMessAvailability
 );
+router.post("/update-messavailability", auth([3, messAdmin,hostelAdmin]), updateMessAvailability);
 router.get(
   "/mess-availablitybyid/:messId",
   auth([

@@ -241,6 +241,8 @@ const getMessUserByMessId = catchAsync(async (req, res) => {
   });
 });
 
+
+
 const createMessUser = catchAsync(async (req, res) => {
   const user = await messUser.findOne({
     where: { studentId: req.body.studentId, year: year, month: month },
@@ -340,6 +342,7 @@ const updateMessUser = catchAsync(async (req, res) => {
     const data = await messUser.update(
       {
         messId: body.messId,
+
       },
       { where: { studentId: req.body.studentId, year: year, month: month } }
     );
@@ -383,7 +386,6 @@ const createMessReview = catchAsync(async (req, res) => {
   });
   if (user == null) {
     const body = req.body;
-    console.log(body);
     const data = await messReview.create({
       messId: body.messId,
       studentId: body.studentId,
@@ -478,10 +480,25 @@ const getMessAvailability = catchAsync(async (req, res) => {
 });
 
 const getMessAvailabilityByMessId = catchAsync(async (req, res) => {
-  const data = await messAvailability.findAll();
+  const data = await messAvailability.findOne({ where: { messId: req.params.messId } });
+  console.log(data)
   res.status(200).json({
+    
     data: data,
   });
+});
+
+const updateMessAvailability= catchAsync(async (req, res) => {
+  const body = req.body;
+  const data = await messAvailability.update(
+    {
+      boysCapacity: body.boyCapacity,
+      girlsCapacity: body.girlCapacity,
+    },
+    { where: { messId: body.messId } }
+  );
+  if (data[0]) res.status(200).json({ message: "successfully updated" });
+  else res.status(401).json({ err: "mess with that messId not exists" });
 });
 
 module.exports = {
@@ -509,5 +526,7 @@ module.exports = {
   getMessAvailability,
   getMessAvailabilityByMessId,
   getMessUserByStudentId,
-  getMessAdminByEmail
+  getMessAdminByEmail,
+  updateMessAvailability,
+  
 };
